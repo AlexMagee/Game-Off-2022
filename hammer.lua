@@ -7,6 +7,10 @@ function swingHammer()
     -- Process score
     if heat_val > sweet_spot - (sweet_spot_width / 2) and heat_val < sweet_spot + (sweet_spot_width / 2) then
         score = score + 10
+    elseif heat_val > cool_spot and heat_val > sweet_spot - (sweet_spot_width / 2) - semi_sweet_spot_width and heat_val < sweet_spot + (sweet_spot_width / 2) + semi_sweet_spot_width then
+        score = score + 5
+    elseif heat_val > cool_spot then
+        score = score + 2
     else
         score = score + 0
     end

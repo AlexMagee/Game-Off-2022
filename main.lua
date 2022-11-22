@@ -10,9 +10,11 @@ function love.load()
     heat_max = 1
     heat_speed = 0.75
     heat_direction = 0
+    cool_spot = 0.25
     sweet_spot = 0.5
-    sweet_spot_range = {0.25, 1}
+    sweet_spot_range = {cool_spot, 1}
     sweet_spot_width = 0.1
+    semi_sweet_spot_width = 0.1
     -- Difficulty
     difficulty = 2
     difficulty_values = {0.5, 1, 2}
