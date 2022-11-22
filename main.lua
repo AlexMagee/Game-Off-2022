@@ -26,6 +26,7 @@ function love.load()
     -- Game
     game_active = 1
     score = 0
+    scoring_bracket = ""
 end
 
 function love.update(dt)
@@ -107,4 +108,8 @@ function love.draw()
     -- Graphics for score
     love.graphics.setColor(1, 1, 0)
     love.graphics.print("Score: " .. score, 10, 90)
+
+    -- Scoring bracket
+    love.graphics.setColor(1, 1, 0)
+    love.graphics.print("Scoring Bracket: " .. scoring_bracket, 10, 110)
 end
