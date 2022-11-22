@@ -11,9 +11,14 @@ function love.load()
     -- Difficulty
     difficulty = 2
     difficulty_values = {0.5, 1, 2}
+    -- Timer
+    timer_val = 0
+    timer_positive_ceil = 10
+    timer_negative_floor = 20
 end
 
 function love.update(dt)
+    timer_val = timer_val + dt
     if heat_direction == 0 then
         heat_val = heat_val + (heat_speed * dt * difficulty_values[difficulty])
         if heat_val > heat_max then
@@ -38,6 +43,17 @@ function love.keyreleased(key, scancode, isrepeat)
 end
 
 function love.draw()
+    -- Graphics for Heat
     love.graphics.setColor(1, 0, 0)
-    love.graphics.print(heat_val, 100, 100)
+    love.graphics.print("Heat: " .. heat_val, 10, 10)
+
+    -- Graphics for timer
+    love.graphics.setColor(0, 1, 0)
+    if timer_val > timer_positive_ceil then
+        love.graphics.setColor(1, 1, 1)
+    end
+    if timer_val > timer_negative_floor then
+        love.graphics.setColor(1, 0, 0)
+    end
+    love.graphics.print("Timer: " .. math.floor(timer_val / 60) .. ":" .. string.format("%02d", math.floor(timer_val % 60)) .. "." .. ("%03d"):format((timer_val % 1) * 1000), 10, 30)
 end
