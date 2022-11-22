@@ -166,4 +166,11 @@ function love.draw()
         love.graphics.setColor(1, 0 ,0)
     end
     love.graphics.print("Scoring Bracket: " .. scoring_bracket, 10, 150)
+
+    -- Graphics for win and lose
+    if game_active == 2 and score + time_bonus >= 20 then
+        love.graphics.print("You Win", 10, 170)
+    elseif game_active == 2 then
+        love.graphics.print("You Lose", 10, 170)
+    end
 end
