@@ -8,17 +8,20 @@ function love.load()
     heat_max = 1
     heat_speed = 0.75
     heat_direction = 0
+    -- Difficulty
+    difficulty = 2
+    difficulty_values = {0.5, 1, 2}
 end
 
 function love.update(dt)
     if heat_direction == 0 then
-        heat_val = heat_val + (heat_speed * dt)
+        heat_val = heat_val + (heat_speed * dt * difficulty_values[difficulty])
         if heat_val > heat_max then
             heat_val = heat_max
             heat_direction = 1
         end
     elseif heat_direction == 1 then
-        heat_val = heat_val - (heat_speed * dt)
+        heat_val = heat_val - (heat_speed * dt * difficulty_values[difficulty])
         if heat_val < 0 then
             heat_val = 0
             heat_direction = 0
