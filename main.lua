@@ -23,9 +23,14 @@ function love.load()
     hammer_cooldown_speed = 1
     hammer_held = 0
     hammer_swing_count = 10
+    -- Game
+    game_active = 1
 end
 
 function love.update(dt)
+    if game_active == 0 then
+        return
+    end
     -- Advance timer
     timer_val = timer_val + dt
     -- Process heat
