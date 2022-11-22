@@ -144,7 +144,11 @@ function love.draw()
 
     -- Graphics for hammer cooldown
     love.graphics.setColor(1, 1, 1)
-    love.graphics.print("Hammer Cooldown: " .. math.floor(hammer_cooldown_val * 10), 10, 50)
+    love.graphics.print("Hammer Cooldown: ", 10, 50)
+    if game_active == 1 then
+        love.graphics.setColor(1, 1, 1)
+        love.graphics.arc("fill", 140, 60, 5, -math.pi / 2, -math.pi / 2 + 6 - 6 * ((hammer_cooldown_max - hammer_cooldown_val) / hammer_cooldown_max), 10)
+    end
 
     -- Graphics for hammer swing count
     love.graphics.setColor(1, 1, 1)
