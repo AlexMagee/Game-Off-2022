@@ -30,7 +30,8 @@ function love.load()
     time_bonus = 0
     scoring_bracket = ""
     -- Animation
-    round_start_countdown = 4
+    round_start_countdown_max = 4
+    round_start_countdown = round_start_countdown_max
 end
 
 function love.update(dt)
@@ -93,6 +94,20 @@ function love.keypressed(key, scancode, isrepeat)
                 swingHammer()
             end
         end
+    end
+    if game_active == 2 and key == 'r' then
+        heat_val = 0
+        heat_direction = 0
+        timer_val = 0
+        hammer_cooldown_val = 0
+        hammer_held = 0
+        hammer_swing_count = 10
+        game_active = 0
+        score = 0
+        temp_scoring_bracket = ""
+        time_bonus = 0
+        scoring_bracket = ""
+        round_start_countdown = round_start_countdown_max
     end
 end
 
@@ -172,5 +187,11 @@ function love.draw()
         love.graphics.print("You Win", 10, 170)
     elseif game_active == 2 then
         love.graphics.print("You Lose", 10, 170)
+    end
+
+    -- Graphics for play again prompt
+    if game_active == 2 then
+        love.graphics.setColor(1, 1, 1)
+        love.graphics.print("Press R to play again", 10, 190)
     end
 end
