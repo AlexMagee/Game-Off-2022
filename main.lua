@@ -85,4 +85,8 @@ function love.draw()
         love.graphics.setColor(1, 0, 0)
     end
     love.graphics.print("Timer: " .. math.floor(timer_val / 60) .. ":" .. string.format("%02d", math.floor(timer_val % 60)) .. "." .. ("%03d"):format((timer_val % 1) * 1000), 10, 30)
+
+    -- Graphics for hammer cooldown
+    love.graphics.setColor(1, 1, 1)
+    love.graphics.print("Hammer Cooldown: " .. math.floor(hammer_cooldown_val * 10), 10, 50)
 end
