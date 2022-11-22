@@ -26,6 +26,8 @@ function love.load()
     -- Game
     game_active = 1
     score = 0
+    temp_scoring_bracket = ""
+    time_bonus = 0
     scoring_bracket = ""
 end
 
@@ -109,7 +111,20 @@ function love.draw()
     love.graphics.setColor(1, 1, 0)
     love.graphics.print("Score: " .. score, 10, 90)
 
-    -- Scoring bracket
+    -- Graphics for scoring bracket
     love.graphics.setColor(1, 1, 0)
-    love.graphics.print("Scoring Bracket: " .. scoring_bracket, 10, 110)
+    love.graphics.print("Temporary scoring Bracket: " .. temp_scoring_bracket, 10, 110)
+
+    -- Graphics for time Bonus
+    love.graphics.setColor(0, 1, 0)
+    if time_bonus == 0 then
+        love.graphics.setColor(1, 1, 1)
+    elseif time_bonus == -10 then
+        love.graphics.setColor(1, 0, 0)
+    end
+    love.graphics.print("Time Bonus: " .. time_bonus, 10, 130)
+
+    -- Graphics for scoring bracket
+    love.graphics.setColor(1, 1, 0)
+    love.graphics.print("Scoring Bracket: " .. scoring_bracket, 10, 150)
 end
