@@ -27,7 +27,9 @@ function love.load()
     hammer_cooldown_max = 1
     hammer_cooldown_speed = 1
     hammer_held = 0
-    hammer_swing_count = 10
+    hammer_swing_count_max = 10
+    hammer_swing_count = hammer_swing_count_max
+    hammer_hit_history = {'-', '-', '-', '-', '-', '-', '-', '-', '-', '-'}
     -- Game
     game_active = 0
     score = 0
@@ -106,7 +108,7 @@ function love.keypressed(key, scancode, isrepeat)
         timer_val = 0
         hammer_cooldown_val = 0
         hammer_held = 0
-        hammer_swing_count = 10
+        hammer_swing_count = hammer_swing_count_max
         game_active = 0
         score = 0
         temp_scoring_bracket = ""
@@ -207,4 +209,8 @@ function love.draw()
         love.graphics.setColor(1, 1, 1)
         love.graphics.print("Press R to play again", 10, 210)
     end
+
+    -- Graphics for hit history
+    love.graphics.setColor(1, 1, 1)
+    love.graphics.print("Hammer Hit History: [" .. hammer_hit_history[1] .. "], [" .. hammer_hit_history[2] .. "], [" .. hammer_hit_history[3] .. "], [" .. hammer_hit_history[4] .. "], [" .. hammer_hit_history[5] .. "], [" .. hammer_hit_history[6] .. "], [" .. hammer_hit_history[7] .. "], [" .. hammer_hit_history[8] .. "], [" .. hammer_hit_history[9] .. "], [" .. hammer_hit_history[10] .. "]", 10, 230)
 end

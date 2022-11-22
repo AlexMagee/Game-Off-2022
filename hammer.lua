@@ -5,15 +5,20 @@ function swingHammer()
     love.audio.play(clang)
 
     -- Process score
+    temp_score = 0
     if heat_val > sweet_spot - (sweet_spot_width / 2) and heat_val < sweet_spot + (sweet_spot_width / 2) then
-        score = score + 10
+        temp_score = 10
     elseif heat_val > cool_spot and heat_val > sweet_spot - (sweet_spot_width / 2) - semi_sweet_spot_width and heat_val < sweet_spot + (sweet_spot_width / 2) + semi_sweet_spot_width then
-        score = score + 5
+        temp_score = 5
     elseif heat_val > cool_spot then
-        score = score + 2
+        temp_score = 2
     else
-        score = score + 0
+        temp_score = 0
     end
+    score = score + temp_score
+
+    -- Store hammer hit history
+    hammer_hit_history[hammer_swing_count_max - hammer_swing_count] = temp_score
 
     -- Process sweet spot
     sweet_spot = tonumber(string.format("%.2f", math.random() * (sweet_spot_range[2] - sweet_spot_range[1]) + sweet_spot_range[1]))
