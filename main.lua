@@ -24,15 +24,30 @@ function love.load()
     hammer_held = 0
     hammer_swing_count = 10
     -- Game
-    game_active = 1
+    game_active = 0
     score = 0
     temp_scoring_bracket = ""
     time_bonus = 0
     scoring_bracket = ""
+    -- Animation
+    round_start_countdown = 4
 end
 
 function love.update(dt)
+    -- Advance round start timer
+    if round_start_countdown > 0 then
+        round_start_countdown = round_start_countdown - dt
+        if round_start_countdown < 0 then
+            round_start_countdown = 0
+        end
+    end
+    -- Check if game is inactive
     if game_active == 0 then
+        -- Check if countdown has elapsed
+        if round_start_countdown < 1 then
+            -- Start round
+            game_active = 1
+        end
         return
     end
     -- Advance timer
@@ -59,7 +74,7 @@ function love.update(dt)
         end
     end
     -- Process hammer held
-    if hammer_cooldown_val == 0 and hammer_held == 1 and hammer_swing_count > 0 then
+    if game_active == 1 and hammer_cooldown_val == 0 and hammer_held == 1 and hammer_swing_count > 0 then
         swingHammer()
     end
 end
@@ -70,7 +85,9 @@ function love.keypressed(key, scancode, isrepeat)
         if hammer_cooldown_val == 0 and hammer_swing_count > 0 then
             -- Process hammer hit
             hammer_held = 1
-            swingHammer()
+            if game_active == 1 then
+                swingHammer()
+            end
         end
     end
 end
@@ -82,6 +99,16 @@ function love.keyreleased(key, scancode, isrepeat)
 end
 
 function love.draw()
+    -- Graphics for round start timer
+    if round_start_countdown > 0 then
+        love.graphics.setColor(round_start_countdown % 1, round_start_countdown % 1, round_start_countdown % 1);
+        if round_start_countdown < 1 then
+            love.graphics.print("Begin", love.graphics.getWidth() / 2 - 18, love.graphics.getHeight() / 2)
+        else
+            love.graphics.print(math.ceil(round_start_countdown - 1), love.graphics.getWidth() / 2, love.graphics.getHeight() / 2)
+        end
+    end
+
     -- Graphics for Heat
     love.graphics.setColor(1, 0, 0)
     love.graphics.print("Heat: " .. math.floor(heat_val * 10), 10, 10)
