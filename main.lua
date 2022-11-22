@@ -10,21 +10,21 @@ function love.load()
     heat_max = 1
     heat_speed = 0.75
     heat_direction = 0
-    cool_spot = 0.25
-    sweet_spot = 0.5
+    cool_spot = 0.2
     sweet_spot_range = {cool_spot, 1}
-    sweet_spot_width = 0.1
+    sweet_spot = tonumber(string.format("%.2f", love.math.random() * (sweet_spot_range[2] - sweet_spot_range[1]) + sweet_spot_range[1]))
+    sweet_spot_width = 0.05
     semi_sweet_spot_width = 0.1
     -- Difficulty
     difficulty = 2
-    difficulty_values = {0.5, 1, 2}
+    difficulty_values = {1, 1.5, 2}
     -- Timer
     timer_val = 0
     timer_positive_ceil = 10
     timer_negative_floor = 20
     -- Hammer
     hammer_cooldown_val = 0
-    hammer_cooldown_max = 1
+    hammer_cooldown_max = 0.5
     hammer_cooldown_speed = 1
     hammer_held = 0
     hammer_swing_count_max = 10
@@ -103,6 +103,7 @@ function love.keypressed(key, scancode, isrepeat)
         end
     end
     if game_active == 2 and key == 'r' then
+        sweet_spot = tonumber(string.format("%.2f", love.math.random() * (sweet_spot_range[2] - sweet_spot_range[1]) + sweet_spot_range[1]))
         heat_val = 0
         heat_direction = 0
         timer_val = 0

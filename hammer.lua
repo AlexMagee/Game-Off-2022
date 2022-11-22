@@ -21,7 +21,7 @@ function swingHammer()
     hammer_hit_history[hammer_swing_count_max - hammer_swing_count] = temp_score
 
     -- Process sweet spot
-    sweet_spot = tonumber(string.format("%.2f", math.random() * (sweet_spot_range[2] - sweet_spot_range[1]) + sweet_spot_range[1]))
+    sweet_spot = tonumber(string.format("%.2f", love.math.random() * (sweet_spot_range[2] - sweet_spot_range[1]) + sweet_spot_range[1]))
 
     -- Check end of round
     if hammer_swing_count == 0 then
@@ -29,11 +29,11 @@ function swingHammer()
         game_active = 2
         
         -- Calculate temp score
-        if score < 20 then
+        if score < 30 then
             temp_scoring_bracket = "Elf-made"
         elseif score < 50 then
             temp_scoring_bracket = "Decent"
-        elseif score < 70 then
+        elseif score < 75 then
             temp_scoring_bracket = "Fine"
         elseif score < 100 then
             temp_scoring_bracket = "Exceptional"
