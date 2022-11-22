@@ -115,6 +115,7 @@ function love.keypressed(key, scancode, isrepeat)
         time_bonus = 0
         scoring_bracket = ""
         round_start_countdown = round_start_countdown_max
+        hammer_hit_history = {'-', '-', '-', '-', '-', '-', '-', '-', '-', '-'}
     end
 end
 
@@ -138,6 +139,20 @@ function love.draw()
     -- Graphics for Heat
     love.graphics.setColor(1, 0, 0)
     love.graphics.print("Heat: " .. math.floor(heat_val * 10), 10, 10)
+    -- hot area
+    love.graphics.rectangle("fill", 45, 13, 100, 10)
+    -- semi sweet spot area
+    love.graphics.setColor(1, 1, 0)
+    love.graphics.rectangle("fill", 45 + (sweet_spot - (sweet_spot_width / 2) - semi_sweet_spot_width) * 100, 13, (semi_sweet_spot_width * 2 + sweet_spot_width) * 100, 10)
+    -- sweet spot area
+    love.graphics.setColor(0, 1, 0)
+    love.graphics.rectangle("fill", 45 + (sweet_spot - (sweet_spot_width / 2)) * 100, 13, sweet_spot_width * 100, 10)
+    -- cool area
+    love.graphics.setColor(0.5, 0.5, 0.5)
+    love.graphics.rectangle("fill", 45, 13, cool_spot * 100, 10)
+    -- swing marker
+    love.graphics.setColor(1, 1, 1)
+    love.graphics.line(45 + heat_val * 100, 13, 45 + heat_val * 100, 23)
 
     -- Graphics for sweet spot
     love.graphics.setColor(1, 1, 1)
