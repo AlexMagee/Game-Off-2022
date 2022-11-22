@@ -74,7 +74,7 @@ end
 function love.draw()
     -- Graphics for Heat
     love.graphics.setColor(1, 0, 0)
-    love.graphics.print("Heat: " .. heat_val, 10, 10)
+    love.graphics.print("Heat: " .. math.floor(heat_val * 10), 10, 10)
 
     -- Graphics for timer
     love.graphics.setColor(0, 1, 0)
