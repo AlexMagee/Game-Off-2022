@@ -39,7 +39,7 @@ function swingHammer()
             scoring_bracket = "Decent"
         elseif score + time_bonus < 70 then
             scoring_bracket = "Fine"
-        elseif score + time_bonus < 100 then
+        elseif score + time_bonus < 100 or (score ~= 100 and score + time_bonus >= 100) then
             scoring_bracket = "Exceptional"
         else
             scoring_bracket = "Masterful"
