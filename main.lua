@@ -25,6 +25,7 @@ function love.load()
     hammer_swing_count = 10
     -- Game
     game_active = 1
+    score = 0
 end
 
 function love.update(dt)
@@ -102,4 +103,8 @@ function love.draw()
         love.graphics.setColor(1, 0, 0)
     end
     love.graphics.print("Hammer Swings: " .. hammer_swing_count, 10, 70)
+
+    -- Graphics for score
+    love.graphics.setColor(1, 1, 0)
+    love.graphics.print("Score: " .. score, 10, 90)
 end
