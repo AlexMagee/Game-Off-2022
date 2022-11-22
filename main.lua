@@ -1,3 +1,5 @@
+require "hammer"
+
 function love.load()
     love.window.setTitle("Strike While The Iron Is Hot")
     clang = love.audio.newSource("clang.wav", "static")
@@ -19,6 +21,7 @@ function love.load()
     hammer_cooldown_val = 0
     hammer_cooldown_max = 1
     hammer_cooldown_speed = 1
+    hammer_held = 0
 end
 
 function love.update(dt)
@@ -45,6 +48,10 @@ function love.update(dt)
             hammer_cooldown_val = 0
         end
     end
+    -- Process hammer held
+    if hammer_cooldown_val == 0 and hammer_held == 1 then
+        swingHammer()
+    end
 end
 
 function love.keypressed(key, scancode, isrepeat)
@@ -52,14 +59,16 @@ function love.keypressed(key, scancode, isrepeat)
         -- Check can do hammer hit
         if hammer_cooldown_val == 0 then
             -- Process hammer hit
-            hammer_cooldown_val = hammer_cooldown_max
-            love.audio.play(clang)
+            hammer_held = 1
+            swingHammer()
         end
     end
 end
 
 function love.keyreleased(key, scancode, isrepeat)
-
+    if key == 'h' then
+        hammer_held = 0
+    end
 end
 
 function love.draw()
