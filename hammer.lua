@@ -5,7 +5,14 @@ function swingHammer()
     love.audio.play(clang)
 
     -- Process score
-    score = score + 0
+    if heat_val > sweet_spot - (sweet_spot_width / 2) and heat_val < sweet_spot + (sweet_spot_width / 2) then
+        score = score + 10
+    else
+        score = score + 0
+    end
+
+    -- Process sweet spot
+    sweet_spot = tonumber(string.format("%.2f", math.random() * (sweet_spot_range[2] - sweet_spot_range[1]) + sweet_spot_range[1]))
 
     -- Check end of round
     if hammer_swing_count == 0 then

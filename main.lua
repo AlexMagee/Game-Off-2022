@@ -10,6 +10,9 @@ function love.load()
     heat_max = 1
     heat_speed = 0.75
     heat_direction = 0
+    sweet_spot = 0.5
+    sweet_spot_range = {0.25, 1}
+    sweet_spot_width = 0.1
     -- Difficulty
     difficulty = 2
     difficulty_values = {0.5, 1, 2}
@@ -132,6 +135,10 @@ function love.draw()
     love.graphics.setColor(1, 0, 0)
     love.graphics.print("Heat: " .. math.floor(heat_val * 10), 10, 10)
 
+    -- Graphics for sweet spot
+    love.graphics.setColor(1, 1, 1)
+    love.graphics.print("Sweet Spot: " .. sweet_spot * 10, 10, 30)
+
     -- Graphics for timer
     love.graphics.setColor(0, 1, 0)
     if timer_val > timer_positive_ceil then
@@ -140,14 +147,14 @@ function love.draw()
     if timer_val > timer_negative_floor then
         love.graphics.setColor(1, 0, 0)
     end
-    love.graphics.print("Timer: " .. math.floor(timer_val / 60) .. ":" .. string.format("%02d", math.floor(timer_val % 60)) .. "." .. ("%03d"):format((timer_val % 1) * 1000), 10, 30)
+    love.graphics.print("Timer: " .. math.floor(timer_val / 60) .. ":" .. string.format("%02d", math.floor(timer_val % 60)) .. "." .. ("%03d"):format((timer_val % 1) * 1000), 10, 50)
 
     -- Graphics for hammer cooldown
     love.graphics.setColor(1, 1, 1)
-    love.graphics.print("Hammer Cooldown: ", 10, 50)
+    love.graphics.print("Hammer Cooldown: ", 10, 70)
     if game_active == 1 then
         love.graphics.setColor(1, 1, 1)
-        love.graphics.arc("fill", 140, 60, 5, -math.pi / 2, -math.pi / 2 + 6 - 6 * ((hammer_cooldown_max - hammer_cooldown_val) / hammer_cooldown_max), 10)
+        love.graphics.arc("fill", 140, 80, 5, -math.pi / 2, -math.pi / 2 + 6 - 6 * ((hammer_cooldown_max - hammer_cooldown_val) / hammer_cooldown_max), 10)
     end
 
     -- Graphics for hammer swing count
@@ -155,11 +162,11 @@ function love.draw()
     if hammer_swing_count == 0 then
         love.graphics.setColor(1, 0, 0)
     end
-    love.graphics.print("Hammer Swings: " .. hammer_swing_count, 10, 70)
+    love.graphics.print("Hammer Swings: " .. hammer_swing_count, 10, 90)
 
     -- Graphics for score
     love.graphics.setColor(1, 1, 0)
-    love.graphics.print("Score: " .. score, 10, 90)
+    love.graphics.print("Score: " .. score, 10, 110)
 
     -- Graphics for scoring bracket
     if score >= 20 then
@@ -167,7 +174,7 @@ function love.draw()
     else
         love.graphics.setColor(1, 0 ,0)
     end
-    love.graphics.print("Temporary scoring Bracket: " .. temp_scoring_bracket, 10, 110)
+    love.graphics.print("Temporary scoring Bracket: " .. temp_scoring_bracket, 10, 130)
 
     -- Graphics for time Bonus
     love.graphics.setColor(0, 1, 0)
@@ -176,7 +183,7 @@ function love.draw()
     elseif time_bonus == -10 then
         love.graphics.setColor(1, 0, 0)
     end
-    love.graphics.print("Time Bonus: " .. time_bonus, 10, 130)
+    love.graphics.print("Time Bonus: " .. time_bonus, 10, 150)
 
     -- Graphics for scoring bracket
     if score + time_bonus >= 20 then
@@ -184,18 +191,18 @@ function love.draw()
     else
         love.graphics.setColor(1, 0 ,0)
     end
-    love.graphics.print("Scoring Bracket: " .. scoring_bracket, 10, 150)
+    love.graphics.print("Scoring Bracket: " .. scoring_bracket, 10, 170)
 
     -- Graphics for win and lose
     if game_active == 2 and score + time_bonus >= 20 then
-        love.graphics.print("You Win", 10, 170)
+        love.graphics.print("You Win", 10, 190)
     elseif game_active == 2 then
-        love.graphics.print("You Lose", 10, 170)
+        love.graphics.print("You Lose", 10, 190)
     end
 
     -- Graphics for play again prompt
     if game_active == 2 then
         love.graphics.setColor(1, 1, 1)
-        love.graphics.print("Press R to play again", 10, 190)
+        love.graphics.print("Press R to play again", 10, 210)
     end
 end
