@@ -22,6 +22,7 @@ function love.load()
     hammer_cooldown_max = 1
     hammer_cooldown_speed = 1
     hammer_held = 0
+    hammer_swing_count = 10
 end
 
 function love.update(dt)
@@ -49,7 +50,7 @@ function love.update(dt)
         end
     end
     -- Process hammer held
-    if hammer_cooldown_val == 0 and hammer_held == 1 then
+    if hammer_cooldown_val == 0 and hammer_held == 1 and hammer_swing_count > 0 then
         swingHammer()
     end
 end
@@ -57,7 +58,7 @@ end
 function love.keypressed(key, scancode, isrepeat)
     if key == 'h' then
         -- Check can do hammer hit
-        if hammer_cooldown_val == 0 then
+        if hammer_cooldown_val == 0 and hammer_swing_count > 0 then
             -- Process hammer hit
             hammer_held = 1
             swingHammer()
@@ -89,4 +90,11 @@ function love.draw()
     -- Graphics for hammer cooldown
     love.graphics.setColor(1, 1, 1)
     love.graphics.print("Hammer Cooldown: " .. math.floor(hammer_cooldown_val * 10), 10, 50)
+
+    -- Graphics for hammer swing count
+    love.graphics.setColor(1, 1, 1)
+    if hammer_swing_count == 0 then
+        love.graphics.setColor(1, 0, 0)
+    end
+    love.graphics.print("Hammer Swings: " .. hammer_swing_count, 10, 70)
 end
