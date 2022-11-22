@@ -15,10 +15,16 @@ function love.load()
     timer_val = 0
     timer_positive_ceil = 10
     timer_negative_floor = 20
+    -- Hammer
+    hammer_cooldown_val = 0
+    hammer_cooldown_max = 1
+    hammer_cooldown_speed = 1
 end
 
 function love.update(dt)
+    -- Advance timer
     timer_val = timer_val + dt
+    -- Process heat
     if heat_direction == 0 then
         heat_val = heat_val + (heat_speed * dt * difficulty_values[difficulty])
         if heat_val > heat_max then
@@ -32,10 +38,24 @@ function love.update(dt)
             heat_direction = 0
         end
     end
+    -- Process hammer cooldown
+    if hammer_cooldown_val ~= 0 then
+        hammer_cooldown_val = hammer_cooldown_val - hammer_cooldown_speed * dt
+        if hammer_cooldown_val < 0 then
+            hammer_cooldown_val = 0
+        end
+    end
 end
 
 function love.keypressed(key, scancode, isrepeat)
-
+    if key == 'h' then
+        -- Check can do hammer hit
+        if hammer_cooldown_val == 0 then
+            -- Process hammer hit
+            hammer_cooldown_val = hammer_cooldown_max
+            love.audio.play(clang)
+        end
+    end
 end
 
 function love.keyreleased(key, scancode, isrepeat)
