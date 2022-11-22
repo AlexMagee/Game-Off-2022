@@ -50,6 +50,10 @@ function love.update(dt)
         end
         return
     end
+    -- Check if game is over
+    if game_active == 2 then
+        return
+    end
     -- Advance timer
     timer_val = timer_val + dt
     -- Process heat
