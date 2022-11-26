@@ -9,6 +9,15 @@ function love.load()
     game_music = love.audio.newSource("the_bearded_bastard.mp3", "static")
     love.audio.play(menu_music)
 
+    meter_frame = love.graphics.newImage("gui/meter.png")
+    marker_frame = love.graphics.newImage("gui/marker.png")
+    quality_frame = love.graphics.newImage("gui/quality.png")
+
+    anvil = love.graphics.newImage("gui/anvil.png")
+    iron = love.graphics.newImage("gui/iron.png")
+    hammer_up = love.graphics.newImage("gui/hammer_up.png")
+    hammer_down = love.graphics.newImage("gui/hammer_down.png")
+
     menu_font = love.graphics.newFont(12)
 
     application_state = 0
@@ -95,6 +104,17 @@ function love.draw()
         love.graphics.setFont(menu_font)
         menu_draw()
     elseif application_state == 1 then
+        -- Art Assets
+        love.graphics.draw(quality_frame, 495, 107)
+        love.graphics.draw(meter_frame, 255, 107)
+        love.graphics.draw(marker_frame, 255, 91)
+        love.graphics.draw(anvil, 287, 186)
+        love.graphics.setColor(0.5, 0.5, 0.5)
+        love.graphics.draw(iron, 287, 186)
+        love.graphics.setColor(1, 1, 1)
+        love.graphics.draw(hammer_down, 287, 186)
+        love.graphics.draw(hammer_up, 287, 186)
+
         game_draw()
     end
 end
