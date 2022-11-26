@@ -184,9 +184,27 @@ function love.draw()
     end
     love.graphics.print("Hammer Swings: " .. hammer_swing_count, 10, 90)
 
+    -- Graphics for hit quality
+    if hammer_hit_history[hammer_swing_count_max - hammer_swing_count] == 10 then
+        love.graphics.setColor(0, 1, 0)
+        love.graphics.print("Hit Quality: Great", 10, 110)
+    elseif hammer_hit_history[hammer_swing_count_max - hammer_swing_count] == 5 then
+        love.graphics.setColor(1, 1, 0)
+        love.graphics.print("Hit Quality: Good", 10, 110)
+    elseif hammer_hit_history[hammer_swing_count_max - hammer_swing_count] == 2 then
+        love.graphics.setColor(1, 0, 0)
+        love.graphics.print("Hit Quality: Okay", 10, 110)
+    elseif hammer_hit_history[hammer_swing_count_max - hammer_swing_count] == 0 then
+        love.graphics.setColor(0.5, 0.5, 0.5)
+        love.graphics.print("Hit Quality: Cold", 10, 110)
+    else
+        love.graphics.setColor(1, 1, 1)
+        love.graphics.print("Hit Quality:", 10, 110)
+    end
+
     -- Graphics for score
     love.graphics.setColor(1, 1, 0)
-    love.graphics.print("Score: " .. score, 10, 110)
+    love.graphics.print("Score: " .. score, 10, 130)
 
     -- Graphics for scoring bracket
     if score >= 20 then
@@ -194,7 +212,7 @@ function love.draw()
     else
         love.graphics.setColor(1, 0 ,0)
     end
-    love.graphics.print("Temporary scoring Bracket: " .. temp_scoring_bracket, 10, 130)
+    love.graphics.print("Temporary scoring Bracket: " .. temp_scoring_bracket, 10, 150)
 
     -- Graphics for time Bonus
     love.graphics.setColor(0, 1, 0)
@@ -203,7 +221,7 @@ function love.draw()
     elseif time_bonus == -10 then
         love.graphics.setColor(1, 0, 0)
     end
-    love.graphics.print("Time Bonus: " .. time_bonus, 10, 150)
+    love.graphics.print("Time Bonus: " .. time_bonus, 10, 170)
 
     -- Graphics for scoring bracket
     if score + time_bonus >= 20 then
@@ -211,22 +229,22 @@ function love.draw()
     else
         love.graphics.setColor(1, 0 ,0)
     end
-    love.graphics.print("Scoring Bracket: " .. scoring_bracket, 10, 170)
+    love.graphics.print("Scoring Bracket: " .. scoring_bracket, 10, 190)
 
     -- Graphics for win and lose
     if game_active == 2 and score + time_bonus >= 20 then
-        love.graphics.print("You Win", 10, 190)
+        love.graphics.print("You Win", 10, 210)
     elseif game_active == 2 then
-        love.graphics.print("You Lose", 10, 190)
+        love.graphics.print("You Lose", 10, 210)
     end
 
     -- Graphics for play again prompt
     if game_active == 2 then
         love.graphics.setColor(1, 1, 1)
-        love.graphics.print("Press R to play again", 10, 210)
+        love.graphics.print("Press R to play again", 10, 230)
     end
 
     -- Graphics for hit history
     love.graphics.setColor(1, 1, 1)
-    love.graphics.print("Hammer Hit History: [" .. hammer_hit_history[1] .. "], [" .. hammer_hit_history[2] .. "], [" .. hammer_hit_history[3] .. "], [" .. hammer_hit_history[4] .. "], [" .. hammer_hit_history[5] .. "], [" .. hammer_hit_history[6] .. "], [" .. hammer_hit_history[7] .. "], [" .. hammer_hit_history[8] .. "], [" .. hammer_hit_history[9] .. "], [" .. hammer_hit_history[10] .. "]", 10, 230)
+    love.graphics.print("Hammer Hit History: [" .. hammer_hit_history[1] .. "], [" .. hammer_hit_history[2] .. "], [" .. hammer_hit_history[3] .. "], [" .. hammer_hit_history[4] .. "], [" .. hammer_hit_history[5] .. "], [" .. hammer_hit_history[6] .. "], [" .. hammer_hit_history[7] .. "], [" .. hammer_hit_history[8] .. "], [" .. hammer_hit_history[9] .. "], [" .. hammer_hit_history[10] .. "]", 10, 250)
 end
