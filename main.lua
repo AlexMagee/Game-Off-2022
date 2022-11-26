@@ -30,6 +30,8 @@ function love.load()
     hammer_swing_count_max = 10
     hammer_swing_count = hammer_swing_count_max
     hammer_hit_history = {'-', '-', '-', '-', '-', '-', '-', '-', '-', '-'}
+    hammer_hit_quality_timer = 0
+    hammer_hit_quality_timer_max = 2
     -- Game
     game_active = 0
     score = 0
@@ -89,6 +91,13 @@ function love.update(dt)
     if game_active == 1 and hammer_cooldown_val == 0 and hammer_held == 1 and hammer_swing_count > 0 then
         swingHammer()
     end
+    -- Process hammer hit quality timer
+    if hammer_hit_quality_timer > 0 then
+        hammer_hit_quality_timer = hammer_hit_quality_timer - dt
+        if hammer_hit_quality_timer < 0 then
+            hammer_hit_quality_timer = 0
+        end
+    end
 end
 
 function love.keypressed(key, scancode, isrepeat)
@@ -117,6 +126,7 @@ function love.keypressed(key, scancode, isrepeat)
         scoring_bracket = ""
         round_start_countdown = round_start_countdown_max
         hammer_hit_history = {'-', '-', '-', '-', '-', '-', '-', '-', '-', '-'}
+        hammer_hit_quality_timer = hammer_hit_quality_timer_max
     end
 end
 
@@ -185,16 +195,16 @@ function love.draw()
     love.graphics.print("Hammer Swings: " .. hammer_swing_count, 10, 90)
 
     -- Graphics for hit quality
-    if hammer_hit_history[hammer_swing_count_max - hammer_swing_count] == 10 then
+    if hammer_hit_quality_timer ~= 0 and hammer_hit_history[hammer_swing_count_max - hammer_swing_count] == 10 then
         love.graphics.setColor(0, 1, 0)
         love.graphics.print("Hit Quality: Great", 10, 110)
-    elseif hammer_hit_history[hammer_swing_count_max - hammer_swing_count] == 5 then
+    elseif hammer_hit_quality_timer ~= 0 and hammer_hit_history[hammer_swing_count_max - hammer_swing_count] == 5 then
         love.graphics.setColor(1, 1, 0)
         love.graphics.print("Hit Quality: Good", 10, 110)
-    elseif hammer_hit_history[hammer_swing_count_max - hammer_swing_count] == 2 then
+    elseif hammer_hit_quality_timer ~= 0 and hammer_hit_history[hammer_swing_count_max - hammer_swing_count] == 2 then
         love.graphics.setColor(1, 0, 0)
         love.graphics.print("Hit Quality: Okay", 10, 110)
-    elseif hammer_hit_history[hammer_swing_count_max - hammer_swing_count] == 0 then
+    elseif hammer_hit_quality_timer ~= 0 and hammer_hit_history[hammer_swing_count_max - hammer_swing_count] == 0 then
         love.graphics.setColor(0.5, 0.5, 0.5)
         love.graphics.print("Hit Quality: Cold", 10, 110)
     else

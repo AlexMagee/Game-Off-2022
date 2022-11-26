@@ -20,6 +20,9 @@ function swingHammer()
     -- Store hammer hit history
     hammer_hit_history[hammer_swing_count_max - hammer_swing_count] = temp_score
 
+    -- Reset hammer hit timer quality
+    hammer_hit_quality_timer = hammer_hit_quality_timer_max
+
     -- Process sweet spot
     sweet_spot = tonumber(string.format("%.2f", love.math.random() * (sweet_spot_range[2] - sweet_spot_range[1]) + sweet_spot_range[1]))
 
