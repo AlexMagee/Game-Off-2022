@@ -110,9 +110,6 @@ function love.draw()
         love.graphics.draw(anvil, 287, 186)
         love.graphics.setColor(0.5, 0.5, 0.5)
         love.graphics.draw(iron, 287, 186)
-        love.graphics.setColor(1, 1, 1)
-        love.graphics.draw(hammer_down, 287, 186)
-        love.graphics.draw(hammer_up, 287, 186)
 
         game_draw()
     end
