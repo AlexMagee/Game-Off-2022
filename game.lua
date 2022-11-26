@@ -101,7 +101,9 @@ function game_draw()
             love.graphics.print(math.ceil(round_start_countdown - 1), love.graphics.getWidth() / 2, love.graphics.getHeight() / 2)
         end
     end
-
+    -- Color iron
+    love.graphics.setColor(1 - (0.5 * ((heat_max - heat_val) / heat_max)), 0.25 + (0.25 * ((heat_max - heat_val) / heat_max)), 0 + (0.5 * ((heat_max - heat_val) / heat_max)))
+    love.graphics.draw(iron, 287, 186)
     -- hot area
     love.graphics.setColor(1, 0, 0)
     love.graphics.rectangle("fill", 265, 117, 200, 20)
