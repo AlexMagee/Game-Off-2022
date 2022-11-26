@@ -116,6 +116,13 @@ function game_draw()
     -- cool area
     love.graphics.setColor(0.5, 0.5, 0.5)
     love.graphics.rectangle("fill", 265, 117, cool_spot * 200, 20)
+    -- Clear excess heat meter
+    love.graphics.setColor(0, 0, 0)
+    love.graphics.rectangle("fill", 465, 117, 50, 20)
+    -- Draw meter and quality frame
+    love.graphics.setColor(1, 1, 1)
+    love.graphics.draw(meter_frame, 255, 107)
+    love.graphics.draw(quality_frame, 495, 107)
     -- swing marker
     love.graphics.setColor(0, 0, 0)
     love.graphics.line(265 + heat_val * 200, 102, 265 + heat_val * 200, 152)
