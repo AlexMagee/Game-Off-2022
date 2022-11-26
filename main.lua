@@ -9,6 +9,8 @@ function love.load()
     game_music = love.audio.newSource("the_bearded_bastard.mp3", "static")
     love.audio.play(menu_music)
 
+    menu_font = love.graphics.newFont(12)
+
     application_state = 0
     music_fade_timer_max = 1
     music_fade_timer = 0
@@ -90,6 +92,7 @@ end
 
 function love.draw()
     if application_state == 0 then
+        love.graphics.setFont(menu_font)
         menu_draw()
     elseif application_state == 1 then
         game_draw()

@@ -32,6 +32,8 @@ function menu_keypressed(key, scancode, isrepeat)
 end
 
 function menu_draw()
+    love.graphics.setColor(1, 0, 0)
+    love.graphics.printf("Strike While the Iron is Hot", (love.graphics.getWidth() / 2) - 150, 30, 300, "center")
     if menu_state == 0 then
         -- Play Game
         if menu_highlight == 0 then
@@ -39,7 +41,7 @@ function menu_draw()
         else
             love.graphics.setColor(0.5, 0.5, 0.5)
         end
-        love.graphics.print("Play Game", 100, 100)
+        love.graphics.printf("Play Game", (love.graphics.getWidth() / 2) - 150, 100, 300, "center")
 
         -- Instructions
         if menu_highlight == 1 then
@@ -47,7 +49,7 @@ function menu_draw()
         else
             love.graphics.setColor(0.5, 0.5, 0.5)
         end
-        love.graphics.print("Instructions", 100, 120)
+        love.graphics.printf("Instructions", (love.graphics.getWidth() / 2) - 150, 120, 300, "center")
 
         -- Credits
         if menu_highlight == 2 then
@@ -55,7 +57,7 @@ function menu_draw()
         else
             love.graphics.setColor(0.5, 0.5, 0.5)
         end
-        love.graphics.print("Credits", 100, 140)
+        love.graphics.printf("Credits", (love.graphics.getWidth() / 2) - 150, 140, 300, "center")
 
         -- Quit
         if menu_highlight == 3 then
@@ -63,12 +65,12 @@ function menu_draw()
         else
             love.graphics.setColor(0.5, 0.5, 0.5)
         end
-        love.graphics.print("Quit", 100, 160)
+        love.graphics.printf("Quit", (love.graphics.getWidth() / 2) - 150, 160, 300, "center")
     elseif menu_state == 1 then
         love.graphics.setColor(1, 1, 1)
-        love.graphics.print("Welcome to Strike While the Iron is Hot.\nYou are about to become a Metalcraftdwarf completing a series of goblet work orders.\nYou will be given an anvil, a hammer, and unrestricted access to the metal bar stockpile.\n\nPress H to swing your hammer.\nFor best results, swing while the iron is hot.\nPress Escape to Return", 100, 100)
+        love.graphics.print("Welcome to Strike While the Iron is Hot.\nYou are about to become a Metalcraftdwarf completing a series of goblet work orders.\nYou will be given an anvil, a hammer, and unrestricted access to the metal bar stockpile.\n\nPress H to swing your hammer.\nFor best results, swing while the iron is hot.\n\n\nPress Escape to Return", 100, 100)
     elseif menu_state == 2 then
         love.graphics.setColor(1, 1, 1)
-        love.graphics.print("Game Design by Alex Magee\nArtwork by Alex Magee\nSoundtrack by Logan Hardin\nSound Effects by Alex Magee\nSpecial thanks to Amy, Kyle, and Logan", 100, 100)
+        love.graphics.print("Game Design by Alex Magee\nArtwork by Alex Magee\nSoundtrack by Logan Hardin\nSound Effects by Alex Magee\nSpecial thanks to Amy, Kyle, and Logan\n\n\nPress Escape to Return", 100, 100)
     end
 end
