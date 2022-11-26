@@ -122,7 +122,6 @@ function game_draw()
     -- Draw meter and quality frame
     love.graphics.setColor(1, 1, 1)
     love.graphics.draw(meter_frame, 255, 107)
-    love.graphics.draw(quality_frame, 495, 107)
     -- swing marker
     love.graphics.setColor(0, 0, 0)
     love.graphics.line(265 + heat_val * 200, 102, 265 + heat_val * 200, 152)
@@ -155,21 +154,20 @@ function game_draw()
     love.graphics.print("Hammer Swings: " .. hammer_swing_count, 10, 90)
 
     -- Graphics for hit quality
+    love.graphics.setColor(1, 1, 1)
+    love.graphics.draw(quality_frame, 495, 107)
     if hammer_hit_quality_timer ~= 0 and hammer_hit_history[hammer_swing_count_max - hammer_swing_count] == 10 then
         love.graphics.setColor(0, 1, 0)
-        love.graphics.print("Hit Quality: Great", 10, 110)
+        love.graphics.draw(quality_great, 495, 107)
     elseif hammer_hit_quality_timer ~= 0 and hammer_hit_history[hammer_swing_count_max - hammer_swing_count] == 5 then
         love.graphics.setColor(1, 1, 0)
-        love.graphics.print("Hit Quality: Good", 10, 110)
+        love.graphics.draw(quality_good, 495, 107)
     elseif hammer_hit_quality_timer ~= 0 and hammer_hit_history[hammer_swing_count_max - hammer_swing_count] == 2 then
         love.graphics.setColor(1, 0, 0)
-        love.graphics.print("Hit Quality: Okay", 10, 110)
+        love.graphics.draw(quality_okay, 495, 107)
     elseif hammer_hit_quality_timer ~= 0 and hammer_hit_history[hammer_swing_count_max - hammer_swing_count] == 0 then
         love.graphics.setColor(0.5, 0.5, 0.5)
-        love.graphics.print("Hit Quality: Cold", 10, 110)
-    else
-        love.graphics.setColor(1, 1, 1)
-        love.graphics.print("Hit Quality:", 10, 110)
+        love.graphics.draw(quality_cold, 495, 107)
     end
 
     -- Graphics for score
