@@ -1,5 +1,6 @@
 require "hammer"
 require "game"
+require "menu"
 
 function love.load()
     love.window.setTitle("Strike While The Iron Is Hot")
@@ -11,6 +12,10 @@ function love.load()
     application_state = 0
     music_fade_timer_max = 1
     music_fade_timer = 0
+
+    -- Menu Variables
+    menu_highlight = 0
+    menu_state = 0
 
     -- Variables
     -- Heat
@@ -71,10 +76,7 @@ end
 
 function love.keypressed(key, scancode, isrepeat)
     if application_state == 0 then
-        if key == 's' then
-            application_state = 1
-            music_fade_timer = music_fade_timer_max
-        end
+        menu_keypressed(key, scancode, isrepeat)        
     elseif application_state == 1 then
         game_keypressed(key, scancode, isrepeat)
     end
@@ -88,8 +90,7 @@ end
 
 function love.draw()
     if application_state == 0 then
-        love.graphics.setColor(1, 1, 1)
-        love.graphics.print("Welcome to Strike While the Iron is Hot.\nYou are about to become a Metalcraftdwarf completing a series of goblet work orders.\nYou will be given an anvil, a hammer, and unrestricted access to the metal bar stockpile.\n\nPress H to swing your hammer.\nFor best results, swing while the iron is hot.\nPress S to start", 100, 100)
+        menu_draw()
     elseif application_state == 1 then
         game_draw()
     end
