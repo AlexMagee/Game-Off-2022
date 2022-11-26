@@ -5,9 +5,12 @@ function love.load()
     love.window.setTitle("Strike While The Iron Is Hot")
     clang = love.audio.newSource("clang.wav", "static")
     menu_music = love.audio.newSource("giant_cave_toad.mp3", "static")
+    game_music = love.audio.newSource("the_bearded_bastard.mp3", "static")
     love.audio.play(menu_music)
 
     application_state = 0
+    music_fade_timer_max = 1
+    music_fade_timer = 0
 
     -- Variables
     -- Heat
@@ -49,8 +52,20 @@ function love.load()
 end
 
 function love.update(dt)
-    if application_state == 1 then
+    if application_state == 0 then
+        
+    elseif application_state == 1 then
         game_update(dt)
+    end
+    if music_fade_timer ~= 0 then
+        music_fade_timer = music_fade_timer - dt
+        if music_fade_timer < 0 then
+            music_fade_timer = 0
+            love.audio.stop(menu_music)
+            game_music:setLooping(true)
+            love.audio.play(game_music)
+        end
+        menu_music:setVolume(music_fade_timer)
     end
 end
 
@@ -58,7 +73,7 @@ function love.keypressed(key, scancode, isrepeat)
     if application_state == 0 then
         if key == 's' then
             application_state = 1
-            love.audio.stop(menu_music)
+            music_fade_timer = music_fade_timer_max
         end
     elseif application_state == 1 then
         game_keypressed(key, scancode, isrepeat)
