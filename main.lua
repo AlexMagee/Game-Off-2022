@@ -4,6 +4,8 @@ require "game"
 function love.load()
     love.window.setTitle("Strike While The Iron Is Hot")
     clang = love.audio.newSource("clang.wav", "static")
+    menu_music = love.audio.newSource("giant_cave_toad.mp3", "static")
+    love.audio.play(menu_music)
 
     application_state = 0
 
