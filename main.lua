@@ -58,6 +58,7 @@ function love.keypressed(key, scancode, isrepeat)
     if application_state == 0 then
         if key == 's' then
             application_state = 1
+            love.audio.stop(menu_music)
         end
     elseif application_state == 1 then
         game_keypressed(key, scancode, isrepeat)
