@@ -107,7 +107,6 @@ function love.draw()
         -- Art Assets
         love.graphics.draw(quality_frame, 495, 107)
         love.graphics.draw(meter_frame, 255, 107)
-        love.graphics.draw(marker_frame, 255, 91)
         love.graphics.draw(anvil, 287, 186)
         love.graphics.setColor(0.5, 0.5, 0.5)
         love.graphics.draw(iron, 287, 186)

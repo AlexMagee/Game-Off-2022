@@ -102,27 +102,23 @@ function game_draw()
         end
     end
 
-    -- Graphics for Heat
-    love.graphics.setColor(1, 0, 0)
-    love.graphics.print("Heat: " .. math.floor(heat_val * 10), 10, 10)
     -- hot area
-    love.graphics.rectangle("fill", 45, 13, 100, 10)
+    love.graphics.setColor(1, 0, 0)
+    love.graphics.rectangle("fill", 265, 117, 200, 20)
     -- semi sweet spot area
     love.graphics.setColor(1, 1, 0)
-    love.graphics.rectangle("fill", 45 + (sweet_spot - (sweet_spot_width / 2) - semi_sweet_spot_width) * 100, 13, (semi_sweet_spot_width * 2 + sweet_spot_width) * 100, 10)
+    love.graphics.rectangle("fill", 265 + (sweet_spot - (sweet_spot_width / 2) - semi_sweet_spot_width) * 200, 117, (semi_sweet_spot_width * 2 + sweet_spot_width) * 200, 20)
     -- sweet spot area
     love.graphics.setColor(0, 1, 0)
-    love.graphics.rectangle("fill", 45 + (sweet_spot - (sweet_spot_width / 2)) * 100, 13, sweet_spot_width * 100, 10)
+    love.graphics.rectangle("fill", 265 + (sweet_spot - (sweet_spot_width / 2)) * 200, 117, sweet_spot_width * 200, 20)
     -- cool area
     love.graphics.setColor(0.5, 0.5, 0.5)
-    love.graphics.rectangle("fill", 45, 13, cool_spot * 100, 10)
+    love.graphics.rectangle("fill", 265, 117, cool_spot * 200, 20)
     -- swing marker
+    love.graphics.setColor(0, 0, 0)
+    love.graphics.line(265 + heat_val * 200, 102, 265 + heat_val * 200, 152)
     love.graphics.setColor(1, 1, 1)
-    love.graphics.line(45 + heat_val * 100, 13, 45 + heat_val * 100, 23)
-
-    -- Graphics for sweet spot
-    love.graphics.setColor(1, 1, 1)
-    love.graphics.print("Sweet Spot: " .. sweet_spot * 10, 10, 30)
+    love.graphics.draw(marker_frame, 250 + heat_val * 200, 91)
 
     -- Graphics for timer
     love.graphics.setColor(0, 1, 0)
