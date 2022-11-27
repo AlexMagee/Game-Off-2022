@@ -111,9 +111,6 @@ function love.draw()
         love.graphics.setFont(menu_font)
         menu_draw()
     elseif application_state == 1 then
-        -- Art Assets
-        love.graphics.draw(anvil, 287, 186)
-
         game_draw()
     elseif application_state == 2 then
         results_draw()
