@@ -79,10 +79,10 @@ end
 
 function draw_bracket(bracket)
     -- Graphics for scoring bracket
-    if score >= 20 then
-        love.graphics.setColor(0, 1, 0)
+    if bracket == "Elf-made" then
+        love.graphics.setColor(1, 0, 0)
     else
-        love.graphics.setColor(1, 0 ,0)
+        love.graphics.setColor(0, 1, 0)
     end
     love.graphics.printf(bracket, love.graphics.getWidth() / 2 - 150, 150, 300, "center")
 end

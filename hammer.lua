@@ -1,3 +1,20 @@
+-- Function calculate scoring brackets
+function calculate_bracket(_score)
+    -- Calculate temp score
+    if _score < 30 then
+        return "Elf-made"
+    elseif _score < 50 then
+        return "Decent"
+    elseif _score < 75 then
+        return "Fine"
+    elseif _score < 100 then
+        return "Exceptional"
+    else
+        return "Masterful"
+    end
+    return "None"
+end
+
 -- Function to swing hammer. Assumes that can hammer has been checked
 function swingHammer()
     hammer_swing_count = hammer_swing_count - 1
@@ -34,17 +51,7 @@ function swingHammer()
         results_timer_val = 1
         
         -- Calculate temp score
-        if score < 30 then
-            temp_scoring_bracket = "Elf-made"
-        elseif score < 50 then
-            temp_scoring_bracket = "Decent"
-        elseif score < 75 then
-            temp_scoring_bracket = "Fine"
-        elseif score < 100 then
-            temp_scoring_bracket = "Exceptional"
-        else
-            temp_scoring_bracket = "Masterful"
-        end
+        temp_scoring_bracket = calculate_bracket(score)
 
         -- Calculate time bonus
         if timer_val < timer_positive_ceil then
@@ -54,16 +61,6 @@ function swingHammer()
         end
 
         -- Calculate final score
-        if score + time_bonus < 20 then
-            scoring_bracket = "Elf-made"
-        elseif score + time_bonus < 50 then
-            scoring_bracket = "Decent"
-        elseif score + time_bonus < 70 then
-            scoring_bracket = "Fine"
-        elseif score + time_bonus < 100 or (score ~= 100 and score + time_bonus >= 100) then
-            scoring_bracket = "Exceptional"
-        else
-            scoring_bracket = "Masterful"
-        end
+        scoring_bracket = calculate_bracket(score + time_bonus)
     end
 end
