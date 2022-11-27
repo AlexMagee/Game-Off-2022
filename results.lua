@@ -111,6 +111,7 @@ function draw_time_bonus()
 end
 
 function results_draw()
+    love.graphics.setFont(menu_font)
     if results_state == 0 then
         -- Graphics for score
         -- love.graphics.setColor(1, 1, 0)

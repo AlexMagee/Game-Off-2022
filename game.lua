@@ -95,6 +95,7 @@ function game_draw()
     love.graphics.setColor(1, 1, 1)
     love.graphics.draw(anvil, 287, 186)
     -- Graphics for round start timer
+    love.graphics.setFont(menu_font)
     if round_start_countdown > 0 then
         love.graphics.setColor(round_start_countdown % 1, round_start_countdown % 1, round_start_countdown % 1);
         if round_start_countdown < 1 then
@@ -138,7 +139,8 @@ function game_draw()
     if timer_val > timer_negative_floor then
         love.graphics.setColor(1, 0, 0)
     end
-    love.graphics.print("Timer: " .. math.floor(timer_val / 60) .. ":" .. string.format("%02d", math.floor(timer_val % 60)) .. "." .. ("%03d"):format((timer_val % 1) * 1000), 10, 50)
+    love.graphics.setFont(timer_font)
+    love.graphics.print(math.floor(timer_val / 60) .. ":" .. string.format("%02d", math.floor(timer_val % 60)) .. "." .. ("%03d"):format((timer_val % 1) * 1000), 600, 510)
 
     -- Graphics for hammer cooldown
     love.graphics.setColor(1, 1, 1)
@@ -153,7 +155,9 @@ function game_draw()
     if hammer_swing_count == 0 then
         love.graphics.setColor(1, 0, 0)
     end
-    love.graphics.print("Hammer Swings: " .. hammer_swing_count, 10, 90)
+    for i=1,hammer_swing_count,1 do
+        love.graphics.draw(target, 50 + (40 * i), 515)
+    end
 
     -- Graphics for hit quality
     love.graphics.setColor(1, 1, 1)

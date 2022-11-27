@@ -22,6 +22,7 @@ function love.load()
     iron = love.graphics.newImage("gui/iron.png")
     hammer_up = love.graphics.newImage("gui/hammer_up.png")
     hammer_down = love.graphics.newImage("gui/hammer_down.png")
+    target = love.graphics.newImage("gui/target.png")
 
     goblet_elf = love.graphics.newImage("gui/goblet_elf.png")
     goblet_decent = love.graphics.newImage("gui/goblet_decent.png")
@@ -30,6 +31,7 @@ function love.load()
     goblet_masterful = love.graphics.newImage("gui/goblet_masterful.png")
 
     menu_font = love.graphics.newFont(12)
+    timer_font = love.graphics.newFont(30)
 
     application_state = 0
     music_fade_timer_max = 1

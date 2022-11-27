@@ -34,6 +34,7 @@ function menu_keypressed(key, scancode, isrepeat)
 end
 
 function menu_draw()
+    love.graphics.setFont(menu_font)
     love.graphics.setColor(1, 0, 0)
     love.graphics.printf("Strike While the Iron is Hot", (love.graphics.getWidth() / 2) - 150, 30, 300, "center")
     if menu_state == 0 then
