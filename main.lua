@@ -1,6 +1,7 @@
 require "hammer"
 require "game"
 require "menu"
+require "results"
 
 function love.load()
     love.window.setTitle("Strike While The Iron Is Hot")
@@ -94,6 +95,8 @@ function love.keypressed(key, scancode, isrepeat)
         menu_keypressed(key, scancode, isrepeat)        
     elseif application_state == 1 then
         game_keypressed(key, scancode, isrepeat)
+    elseif application_state == 2 then
+        results_keypressed(key, scancode, isrepeat)
     end
 end
 
@@ -112,5 +115,7 @@ function love.draw()
         love.graphics.draw(anvil, 287, 186)
 
         game_draw()
+    elseif application_state == 2 then
+        results_draw()
     end
 end

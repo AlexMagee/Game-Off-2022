@@ -30,6 +30,7 @@ function swingHammer()
     if hammer_swing_count == 0 then
         -- Process end of round
         game_active = 2
+        application_state = 2
         
         -- Calculate temp score
         if score < 30 then
