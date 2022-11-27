@@ -23,6 +23,12 @@ function love.load()
     hammer_up = love.graphics.newImage("gui/hammer_up.png")
     hammer_down = love.graphics.newImage("gui/hammer_down.png")
 
+    goblet_elf = love.graphics.newImage("gui/goblet_elf.png")
+    goblet_decent = love.graphics.newImage("gui/goblet_decent.png")
+    goblet_fine = love.graphics.newImage("gui/goblet_fine.png")
+    goblet_exceptional = love.graphics.newImage("gui/goblet_exceptional.png")
+    goblet_masterful = love.graphics.newImage("gui/goblet_masterful.png")
+
     menu_font = love.graphics.newFont(12)
 
     application_state = 0
@@ -50,7 +56,7 @@ function love.load()
     -- Timer
     timer_val = 0
     timer_positive_ceil = 10
-    timer_negative_floor = 20
+    timer_negative_floor = 15
     -- Hammer
     hammer_cooldown_val = 0
     hammer_cooldown_max = 0.5
@@ -70,6 +76,10 @@ function love.load()
     -- Animation
     round_start_countdown_max = 4
     round_start_countdown = round_start_countdown_max
+
+    -- Results Variables
+    results_state = 0
+    results_timer_val = 0
 end
 
 function love.update(dt)
@@ -77,6 +87,8 @@ function love.update(dt)
         
     elseif application_state == 1 then
         game_update(dt)
+    elseif application_state == 2 then
+        results_update(dt)
     end
     if music_fade_timer ~= 0 then
         music_fade_timer = music_fade_timer - dt
