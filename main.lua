@@ -1,131 +1,142 @@
+require "hammer"
+require "game"
+require "menu"
+require "results"
+
 function love.load()
     love.window.setTitle("Strike While The Iron Is Hot")
-    clang = love.audio.newSource("clang.wav", "static")
-    badclang = love.audio.newSource("break.wav", "static")
-    badclang:setVolume(0.25)
-    lose = love.audio.newSource("lose.wav", "static")
-    cooltime = 5
-    heat = 0
-    hammercooldown = 1
-    hammertimer = 0
-    hammerhealth = 10
-    metalhealth = 50
-    fuel = 50
-    adown = 0
-    fdown = 0
+    clang = love.audio.newSource("audio/clang.wav", "static")
+    menu_music = love.audio.newSource("audio/giant_cave_toad.mp3", "static")
+    game_music = love.audio.newSource("audio/the_bearded_bastard.mp3", "static")
+    love.audio.play(menu_music)
+
+    meter_frame = love.graphics.newImage("gui/meter.png")
+    marker_frame = love.graphics.newImage("gui/marker.png")
+    quality_frame = love.graphics.newImage("gui/quality.png")
+    quality_cold = love.graphics.newImage("gui/quality_cold.png")
+    quality_okay = love.graphics.newImage("gui/quality_okay.png")
+    quality_good = love.graphics.newImage("gui/quality_good.png")
+    quality_great = love.graphics.newImage("gui/quality_great.png")
+
+    anvil = love.graphics.newImage("gui/anvil.png")
+    iron = love.graphics.newImage("gui/iron.png")
+    hammer_up = love.graphics.newImage("gui/hammer_up.png")
+    hammer_down = love.graphics.newImage("gui/hammer_down.png")
+
+    goblet_elf = love.graphics.newImage("gui/goblet_elf.png")
+    goblet_decent = love.graphics.newImage("gui/goblet_decent.png")
+    goblet_fine = love.graphics.newImage("gui/goblet_fine.png")
+    goblet_exceptional = love.graphics.newImage("gui/goblet_exceptional.png")
+    goblet_masterful = love.graphics.newImage("gui/goblet_masterful.png")
+
+    menu_font = love.graphics.newFont(12)
+
+    application_state = 0
+    music_fade_timer_max = 1
+    music_fade_timer = 0
+    music_direction = 0
+
+    -- Menu Variables
+    menu_highlight = 0
+    menu_state = 0
+
+    -- Variables
+    -- Heat
+    heat_val = 0
+    heat_max = 1
+    heat_speed = 0.75
+    heat_direction = 0
+    cool_spot = 0.2
+    sweet_spot_range = {cool_spot, 1}
+    sweet_spot = tonumber(string.format("%.2f", love.math.random() * (sweet_spot_range[2] - sweet_spot_range[1]) + sweet_spot_range[1]))
+    sweet_spot_width = 0.05
+    semi_sweet_spot_width = 0.1
+    -- Difficulty
+    difficulty = 2
+    difficulty_values = {1, 1.5, 2}
+    -- Timer
+    timer_val = 0
+    timer_positive_ceil = 10
+    timer_negative_floor = 15
+    -- Hammer
+    hammer_cooldown_val = 0
+    hammer_cooldown_max = 0.5
+    hammer_cooldown_speed = 1
+    hammer_held = 0
+    hammer_swing_count_max = 10
+    hammer_swing_count = hammer_swing_count_max
+    hammer_hit_history = {'-', '-', '-', '-', '-', '-', '-', '-', '-', '-'}
+    hammer_hit_quality_timer = 0
+    hammer_hit_quality_timer_max = 2
+    -- Game
+    game_active = 0
+    score = 0
+    temp_scoring_bracket = ""
+    time_bonus = 0
+    scoring_bracket = ""
+    -- Animation
+    round_start_countdown_max = 4
+    round_start_countdown = round_start_countdown_max
+
+    -- Results Variables
+    results_state = 0
+    results_timer_val = 0
 end
 
 function love.update(dt)
-    if heat ~= 0 then
-        heat = heat - dt
+    if application_state == 0 then
+        
+    elseif application_state == 1 then
+        game_update(dt)
+    elseif application_state == 2 then
+        results_update(dt)
     end
-    if heat < 0 then
-        heat = 0
-    end
-
-    if fdown == 1 and fuel > 0 then
-        fuel = fuel - dt
-    end
-    if fuel < 0 then
-        fuel = 0
-    end
-    if heat ~= 5 and fdown == 1 and fuel > 0 then
-        heat = heat + dt + dt
-    end
-
-    if heat > 5 and fdown == 1 then
-        heat = 5
-    end
-    if hammertimer ~= 0 then
-        hammertimer = hammertimer - dt
-    end
-    if hammertimer < 0 then
-        hammertimer = 0
-    end
-    if adown == 1 then
-        swinghammer()
-    end
-end
-
-function swinghammer()
-    if hammertimer == 0 then
-        if hammerhealth > 1 then
-            hammertimer = hammercooldown
+    if music_fade_timer ~= 0 then
+        music_fade_timer = music_fade_timer - dt
+        if music_direction == 0 then
+            menu_music:setVolume(music_fade_timer)
+        elseif music_direction == 1 then
+            game_music:setVolume(music_fade_timer)
         end
-        if heat > cooltime / 3 and hammerhealth > 0 then
-            love.audio.stop()
-            love.audio.play(clang)
-            metalhealth = metalhealth -1
-        else
-            if hammerhealth == 1 then
-                love.audio.stop()
-                love.audio.play(lose)
-                hammerhealth = 0
-            elseif hammerhealth > 1 then
-                love.audio.stop()
-                love.audio.play(badclang)
-                hammerhealth = hammerhealth -1
+        if music_fade_timer < 0 then
+            music_fade_timer = 0
+            if music_direction == 0 then
+                love.audio.stop(menu_music)
+                game_music:setVolume(1)
+                game_music:setLooping(true)
+                love.audio.play(game_music)
+            elseif music_direction == 1 then
+                love.audio.play(menu_music)
+                love.audio.stop(game_music)
+                music_direction = 0
             end
         end
     end
 end
 
 function love.keypressed(key, scancode, isrepeat)
-    if key == 'a' then
-        adown = 1
-        swinghammer()
-    end
-    if key == 'f' then
-        fdown = 1
-    end
-    if fuel < 0 then
-        fuel = 0
+    if application_state == 0 then
+        menu_keypressed(key, scancode, isrepeat)        
+    elseif application_state == 1 then
+        game_keypressed(key, scancode, isrepeat)
+    elseif application_state == 2 then
+        results_keypressed(key, scancode, isrepeat)
     end
 end
 
 function love.keyreleased(key, scancode, isrepeat)
-    if key == 'a' then
-        adown = 0
-    end
-    if key == 'f' then
-        fdown = 0
+    if application_state == 1 then
+        game_keyreleased(key, scancode, isrepeat)
     end
 end
 
 function love.draw()
-    love.graphics.setColor(0.5, 0.5, 0.5)
-    love.graphics.print(hammerhealth, 0, 100)
-    love.graphics.print(metalhealth, 0, 120)
-    love.graphics.print(("%.3g"):format(fuel), 0, 140)
-    -- TODO draw hammer
-    if adown == 1 then
-        love.graphics.setColor(1, 1, 1)
-    else
-        love.graphics.setColor(0.5, 0.5, 0.5)
+    if application_state == 0 then
+        love.graphics.setFont(menu_font)
+        menu_draw()
+    elseif application_state == 1 then
+        game_draw()
+    elseif application_state == 2 then
+        results_draw()
     end
-    love.graphics.print("a", 115, 85)
-
-    love.graphics.setColor(1, 1, 1)
-    love.graphics.arc("fill", 105, 105, 10, 0, 6 - 6 * ((hammercooldown - hammertimer) / hammercooldown), 10)
-
-    if hammerhealth > 0 then
-        love.graphics.setColor(0.5, 0.5, 0.5)
-    else
-        love.graphics.setColor(0.1, 0.1, 0.1)
-    end
-    love.graphics.rectangle("fill", 100, 100, 10, 10)
-
-    -- TODO draw metal
-    love.graphics.setColor(1 - (0.5 * ((cooltime - heat) / cooltime)), 0.25 + (0.25 * ((cooltime - heat) / cooltime)), 0 + (0.5 * ((cooltime - heat) / cooltime)))
-    love.graphics.rectangle("fill", 90, 150, 30, 10)
-    if heat > cooltime / 3 then
-        love.graphics.setColor(1, 0.25, 0)
-        love.graphics.rectangle("line", 87, 147, 36, 16)
-    end
-    if fdown == 1 then
-        love.graphics.setColor(1, 1, 1)
-    else
-        love.graphics.setColor(0.5, 0.5, 0.5)
-    end
-    love.graphics.print("f", 125, 135)
 end
