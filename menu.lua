@@ -13,6 +13,7 @@ function menu_keypressed(key, scancode, isrepeat)
             end
         end
         if key == 'return' then
+            clang:play()
             if menu_highlight == 0 then
                 application_state = 1
                 music_fade_timer = music_fade_timer_max
@@ -26,6 +27,7 @@ function menu_keypressed(key, scancode, isrepeat)
         end
     elseif menu_state == 1 or menu_state == 2 then
         if key == 'escape' then
+            clang:play()
             menu_state = 0
         end
     end
