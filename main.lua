@@ -34,6 +34,7 @@ function love.load()
     application_state = 0
     music_fade_timer_max = 1
     music_fade_timer = 0
+    music_direction = 0
 
     -- Menu Variables
     menu_highlight = 0
@@ -92,13 +93,24 @@ function love.update(dt)
     end
     if music_fade_timer ~= 0 then
         music_fade_timer = music_fade_timer - dt
+        if music_direction == 0 then
+            menu_music:setVolume(music_fade_timer)
+        elseif music_direction == 1 then
+            game_music:setVolume(music_fade_timer)
+        end
         if music_fade_timer < 0 then
             music_fade_timer = 0
-            love.audio.stop(menu_music)
-            game_music:setLooping(true)
-            love.audio.play(game_music)
+            if music_direction == 0 then
+                love.audio.stop(menu_music)
+                game_music:setVolume(1)
+                game_music:setLooping(true)
+                love.audio.play(game_music)
+            elseif music_direction == 1 then
+                love.audio.play(menu_music)
+                love.audio.stop(game_music)
+                music_direction = 0
+            end
         end
-        menu_music:setVolume(music_fade_timer)
     end
 end
 
