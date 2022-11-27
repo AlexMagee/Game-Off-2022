@@ -4,9 +4,9 @@ require "menu"
 
 function love.load()
     love.window.setTitle("Strike While The Iron Is Hot")
-    clang = love.audio.newSource("clang.wav", "static")
-    menu_music = love.audio.newSource("giant_cave_toad.mp3", "static")
-    game_music = love.audio.newSource("the_bearded_bastard.mp3", "static")
+    clang = love.audio.newSource("audio/clang.wav", "static")
+    menu_music = love.audio.newSource("audio/giant_cave_toad.mp3", "static")
+    game_music = love.audio.newSource("audio/the_bearded_bastard.mp3", "static")
     love.audio.play(menu_music)
 
     meter_frame = love.graphics.newImage("gui/meter.png")
